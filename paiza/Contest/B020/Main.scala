@@ -21,16 +21,28 @@ object Main extends App {
     pages.foreach(x => println(x))
 
     def replaceBack2Go(querys: List[String]): List[String] = {
-        // TODO recursion to 
         var newQuerys: Array[String] = querys.toArray
         val n = querys.size
-        for (x <- 0 until n if "use the back button" == newQuerys(x)) {
-            newQuerys(x) = newQuerys(x - 2)
+        for (x <- 0 until n) {
+            newQuerys(x) = replaceBack2Go(querys, x, 0)
         }
         newQuerys.toList
     }
 
+    def replaceBack2Go(querys: List[String], target: Int, backnum: Int): String = {
+        val query: String = querys(target)
+        query match {
+            case "use"// the back button"
+             if "use"/* the back button"*/ == querys(target - 1) => replaceBack2Go(querys, target - 1, backnum + 1)
+/*            case "use"/* the back button"*/
+             if "use"/* the back button"*/ == querys(target - 2) => replaceBack2Go(querys, target - 3, backnum)
+             */
+            case "use"/* the back button"*/                      => replaceBack2Go(querys, target - 2, backnum)
+            case _                                          => querys(target - backnum)
+        }
+    }
+
     def convQuery2Page(query: String): String = {
-        query.replaceFirst("go to", "")
+        query.replaceFirst("go to ", "")
     }
 }
